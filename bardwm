@@ -1,0 +1,2 @@
+echo "⚡$(upower -i `upower -e | grep 'BAT'`|grep percentage| awk '{print $2}')" ; date +"%a %d, %B %Y ⏲  %H:%M%p"
+
