@@ -1,0 +1,8 @@
+#!/bin/bash
+folder=/home/beethovenlinux/Dropbox/Notes/
+script=/home/beethovenlinux/script/
+
+compton_is_on=$(pgrep compton)
+[[ -z $(pgrep compton) ]] && echo " We are herhe"; pkill compton && exit
+
+compton

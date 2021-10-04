@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+ 
+#file=$(ls ~/Dropbox/Library|grep -v zz | dmenu -i -fn 'NotoMonoRegular:bold:pixelsize=12' -nb black -sb tomato -l 30) 
+source ~/Dropbox/Notes/theme
+file=$(ls ~/Dropbox/Library|grep -v zz |rofi -dmenu -i -p "" -theme "$theme" -width 50 -location 1 -l 25) 
+[[ -z $file ]] && exit
+
+for paper in $file
+do
+open="$open Dropbox/Library/$paper"
+done
+
+ zathura $open
+

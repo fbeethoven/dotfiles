@@ -1,0 +1,30 @@
+#!/bin/sh
+#
+
+#file=$(ls ~/Dropbox/Notes|grep -v zz | dmenu -i -fn 'NotoMonoRegular:bold:pixelsize=12' -nb black -sb tomato -l 30) &&
+source ~/Dropbox/Notes/theme
+file=$(ls ~/Dropbox/Notes|grep -v zz |rofi -dmenu -i -p "" -theme "$theme" -width 50 -location 1 -l 30) &&
+
+if [[ $file == *"sys"* ]]; then
+bash ~/Dropbox/Notes/$file
+else
+if [[ $file == *"pdf"* ]]; then
+for paper in $file
+do
+open="$open Dropbox/Notes/$paper"
+done
+zathura $open
+else
+for note in $file
+do 
+st -e vim ~/Dropbox/Notes/$note
+done
+fi
+fi
+
+# Previous code that could be useful
+#gnome-terminal -e "vim TEST"
+
+#file=$(ls ~/Dropbox/Notes | dmenu -i -fn 'NotoMonoRegular:bold:pixelsize=12' -nb black -sb tomato -l 10)
+#xed ~/Dropbox/Notes/$file
+
