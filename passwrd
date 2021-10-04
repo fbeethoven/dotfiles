@@ -1,0 +1,11 @@
+#!/bin/bash
+folder=/home/beethovenlinux/Dropbox/Notes/
+script=/home/beethovenlinux/script/
+source ~/Dropbox/Notes/theme
+
+list=$(cat $folder/passwords)
+pages=$(echo "$list"|awk '{print $1}'|sed 's/+/ /g'|rofi -dmenu -i -p "Open links: " -theme "$theme" -width 50 -location 1 -lines 30)
+[[ -z $pages ]] && exit
+
+echo "$list" |grep $(echo "$pages"|sed 's/ /+/g')|awk '{print $2}'| xclip -selection clipboard
+

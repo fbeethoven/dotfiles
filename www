@@ -1,0 +1,45 @@
+#!/bin/bash
+
+folder=$HOME/Dropbox/Notes
+script=$HOME/script
+source ~/Dropbox/Notes/theme
+name=$(echo -e "Open\nDelete"|rofi -dmenu -i -p "Name of new link: " -theme "$theme" -width 50 -location 1 -lines 30)
+[[ -z $name ]] && exit
+
+
+if [[ $name == "Open" ]]; then
+list=$(cat $folder/bookmarks)
+pages=$(echo "$list"|awk '{print $1}'|rofi -dmenu -i -p "Open links: " -theme "$theme" -width 50 -location 1 -lines 30)
+[[ -z $pages ]] && exit
+
+for entry in $pages 
+do
+return="$return $(echo "$list"|grep $entry|awk '{print $2}')"
+done
+
+brave-browser $return
+
+#url=$(cat $script/.wwwlist|grep $(cat $script/.wwwlist |awk '{print $1}'|dmenu -i -l 30)|awk '{print $2}')
+#[[ -z $url ]] && exit
+#chromium-browser $url
+else
+
+
+if [[ $name == "Delete" ]]; then
+aux=$(cat $script/.wwwlist)
+save=$(echo "$aux"|awk '{print $1}'|rofi -dmenu -theme "$theme" -i -p "Delete link:" -location 1 -width 90 -lines 30)
+[[ -z $save ]] && exit
+
+for entry in $save
+do
+cat $script/.wwwlist|grep -v $entry>$script/.wwwlist.test
+cat $script/.wwwlist.test > $script/.wwwlist
+notify-send "The link '$entry' has been deleted"
+done
+else
+
+
+echo "$name   $(xclip -selection clipboard -o)">>$folder/bookmarks
+notify-send "The link '$name' has been added"
+fi
+fi

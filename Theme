@@ -1,0 +1,14 @@
+#!/bin/bash
+
+source ~/Dropbox/Notes/theme
+theme=$(echo -e "$(cat ~/Dropbox/Notes/themenames)\nRandom"|rofi -dmenu -i -p "Select new Theme " -width 80 -l 30 -location 1 -theme "$theme")
+
+[[ -z $theme ]] && exit
+
+case $theme in 
+	Random)
+echo "theme=$(shuf ~/Dropbox/Notes/themenames -n 1)" > ~/Dropbox/Notes/theme
+;;
+	*)
+echo "theme=$theme" > ~/Dropbox/Notes/theme
+esac
